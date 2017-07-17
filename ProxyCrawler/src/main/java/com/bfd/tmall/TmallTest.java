@@ -18,28 +18,27 @@ public class TmallTest {
 
         for (int j = 0; j < 30; j++) {
 
-        String listpage = FileUtils.readFileToString(new File("etc/tmalllist.txt"),"utf-8");
-        Matcher m = Pattern.compile("data-id=\"(\\d+)\"").matcher(listpage);
-        while (m.find()){
-            String id = m.group(1);
-            String url = "https://mdskip.taobao.com/core/initItemDetail.htm?itemId=" + id;
-            Map<String,String> headers = WorkCache.headers;
-            headers.put("Referer","https://detail.tmall.com/item.htm?scene=taobao_shop&id=" + id);
-            headers.put("Upgrade-Insecure-Requests","1");
-            headers.put("remoteAddress","180.118.241." + i%255 );
-            headers.put("x-forwarded-for","123.57.17." + i%255 );
-            headers.put("x-real-ip","180.10.241." + i%255 );
-            try {
-                String content = OkHttpUtils.doGet(url, headers);
-                System.out.println(i++ + " ==> " + content);
-                System.out.println(id + " ==> " + content.substring(content.indexOf("\"price\""),content.indexOf("\"price\"") + 16));
+            String listpage = FileUtils.readFileToString(new File("etc/tmalllist.txt"), "utf-8");
+            Matcher m = Pattern.compile("data-id=\"(\\d+)\"").matcher(listpage);
+            while (m.find()) {
+                String id = m.group(1);
+                String url = "https://mdskip.taobao.com/core/initItemDetail.htm?itemId=" + id;
+                Map<String, String> headers = WorkCache.headers;
+                headers.put("Referer", "https://detail.tmall.com/item.htm?scene=taobao_shop&id=" + id);
+                headers.put("Upgrade-Insecure-Requests", "1");
+                headers.put("remoteAddress", "180.118.241." + i % 255);
+                headers.put("x-forwarded-for", "123.57.17." + i % 255);
+                headers.put("x-real-ip", "180.10.241." + i % 255);
+                try {
+                    String content = OkHttpUtils.doGet(url, headers);
+                    System.out.println(i++ + " ==> " + content);
+                    System.out.println(id + " ==> " + content.substring(content.indexOf("\"price\""), content.indexOf("\"price\"") + 16));
 //                Thread.sleep(1000 + 23);
-            } catch (Exception e) {
-                System.out.println(Thread.currentThread().getName() + "  <=  failed");
-            }
-        }
-
-
+                } catch (Exception e) {
+                    System.out.println(Thread.currentThread().getName() + "  <=  failed");
                 }
+            }
+
+        }
     }
 }

@@ -2,12 +2,8 @@ package com.bfd.http;
 
 import com.bfd.model.ProxyIp;
 import okhttp3.*;
-import okio.BufferedSink;
-import org.apache.http.entity.ContentType;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.Map;
@@ -64,7 +60,19 @@ public class OkHttpUtils {
         OkHttpClient client = dClient.newBuilder()
                 .cookieJar(cookieJar)
                 .proxy(new Proxy(Proxy.Type.HTTP,new InetSocketAddress(ip.getIp(),ip.getPort())))
-                .connectTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .build();
+        return doGet(url,headers,client);
+    }
+
+    public static String doGet(String url, Map<String,String> headers, String ip,int port) throws Exception {
+        if (ip == null)
+            return doGet(url,headers);
+
+        OkHttpClient client = dClient.newBuilder()
+                .cookieJar(cookieJar)
+                .proxy(new Proxy(Proxy.Type.HTTP,new InetSocketAddress(ip,port)))
+                .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
         return doGet(url,headers,client);
     }

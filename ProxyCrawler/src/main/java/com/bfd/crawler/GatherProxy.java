@@ -12,17 +12,23 @@ import org.jsoup.select.Elements;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by tcf24 on 2017/7/16.
  */
 public class GatherProxy implements Runnable {
     private static final Log LOG = LogFactory.getLog(Xicidaili.class);
-    private static Map<String, String> headers = WorkCache.headers;
+    private static Map<String, String> headers = new HashMap<>(WorkCache.headers);
+    private BlockingQueue<ProxyIp> PRO_QUEUE = null;
+
+    public GatherProxy(BlockingQueue<ProxyIp> PRO_QUEUE) {
+        this.PRO_QUEUE = PRO_QUEUE;
+    }
 
     @Override
     public void run() {
-        String url = "http://www.gatherproxy.com/zh/proxylist/country/?c=United%20States";
+        String url = null;
 
         headers.put("Referer","http://www.gatherproxy.com/zh/proxylist/country/?c=China");
         headers.put("Content-Type","application/x-www-form-urlencoded");
@@ -31,12 +37,13 @@ public class GatherProxy implements Runnable {
 
         ProxyIp proxyIp = new ProxyIp("127.0.0.1", 1080);
         Map<String, String> params = new HashMap<>();
-        params.put("Country", "united states");
-        params.put("Filter", "");
-        params.put("Uptime", "0");
 
         for (int i = 1; i <= 15; i++) {
             try {
+                url = "http://www.gatherproxy.com/zh/proxylist/country/?c=United%20States";
+                params.put("Country", "united states");
+                params.put("Filter", "");
+                params.put("Uptime", "0");
                 params.put("PageIdx", i + "");
                 String html = OkHttpUtils.doPost(url, headers, params, proxyIp);
                 parse(html);
@@ -66,7 +73,7 @@ public class GatherProxy implements Runnable {
                     int port = Integer.parseInt(bi.toString());
                     //todo 消重判断
 
-                    WorkCache.PROXY_QUEUE.add(new ProxyIp(ip, port));
+                    PRO_QUEUE.add(new ProxyIp(ip, port));
                 }
 
             }
@@ -74,8 +81,8 @@ public class GatherProxy implements Runnable {
     }
 
     public static void main(String[] args) {
-        GatherProxy gatherProxy = new GatherProxy();
-        gatherProxy.run();
+//        GatherProxy gatherProxy = new GatherProxy();
+//        gatherProxy.run();
 
     }
 

@@ -19,6 +19,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Xicidaili implements Runnable{
     private static final Log LOG = LogFactory.getLog(Xicidaili.class);
     private static final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
+    private BlockingQueue<ProxyIp> PRO_QUEUE = null;
+
+    public Xicidaili(BlockingQueue<ProxyIp> PRO_QUEUE) {
+        this.PRO_QUEUE = PRO_QUEUE;
+    }
 
     @Override
     public void run() {
@@ -35,7 +40,7 @@ public class Xicidaili implements Runnable{
                 url = queue.poll();
                 String html = OkHttpUtils.doGet(url, WorkCache.headers);
                 parse(html);
-                Thread.sleep(2000 + ((long)Math.random()*2000));
+                Thread.sleep(5000 + ((long)Math.random()*2000));
             } catch (Exception e) {
                 LOG.error(url + " error! ");
                 queue.add(url);
@@ -60,7 +65,7 @@ public class Xicidaili implements Runnable{
                 int port = Integer.parseInt(tds.get(2).text());
                 //todo 消重判断
 
-                WorkCache.PROXY_QUEUE.add(new ProxyIp(ip,port));
+                PRO_QUEUE.add(new ProxyIp(ip,port));
             }
         });
     }

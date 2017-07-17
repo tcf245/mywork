@@ -18,6 +18,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Kuaidaili implements Runnable{
     private static final Log LOG = LogFactory.getLog(Kuaidaili.class);
     private static final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
+    private BlockingQueue<ProxyIp> PRO_QUEUE = null;
+
+    public Kuaidaili(BlockingQueue<ProxyIp> PRO_QUEUE) {
+        this.PRO_QUEUE = PRO_QUEUE;
+    }
 
     @Override
     public void run() {
@@ -50,13 +55,13 @@ public class Kuaidaili implements Runnable{
         es.forEach(e -> {
             String ip = e.select("td[data-title=\"IP\"]").text();
             int port = Integer.valueOf(e.select("td[data-title=\"PORT\"]").text());
-            WorkCache.PROXY_QUEUE.add(new ProxyIp(ip,port));
+            PRO_QUEUE.add(new ProxyIp(ip,port));
         });
     }
 
     public static void main(String[] args) throws Exception {
-        String html = OkHttpUtils.doGet("http://www.kuaidaili.com/free/inha/1",WorkCache.headers);
-        new Kuaidaili().parse(html);
+//        String html = OkHttpUtils.doGet("http://www.kuaidaili.com/free/inha/1",WorkCache.headers);
+//        new Kuaidaili().parse(html);
 
     }
 
