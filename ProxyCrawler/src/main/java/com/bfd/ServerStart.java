@@ -1,5 +1,6 @@
 package com.bfd;
 
+import com.bfd.crawler.GatherProxy;
 import com.bfd.crawler.Kuaidaili;
 import com.bfd.crawler.Xicidaili;
 import com.bfd.model.ProxyIp;
@@ -18,8 +19,9 @@ public class ServerStart {
     private static final Log LOG = LogFactory.getLog(ServerStart.class);
 
     public void run(){
-//        new Thread(new Xicidaili()).start();
+        new Thread(new Xicidaili()).start();
         new Thread(new Kuaidaili()).start();
+        new Thread(new GatherProxy()).start();
 
         for (int i = 1;i < 10 ;i++){
         new Thread(new ProxyTestWorker()).start();

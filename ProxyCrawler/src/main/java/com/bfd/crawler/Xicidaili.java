@@ -2,7 +2,6 @@ package com.bfd.crawler;
 
 import com.bfd.WorkCache;
 import com.bfd.http.OkHttpUtils;
-import com.bfd.model.ProxyDao;
 import com.bfd.model.ProxyIp;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,10 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -33,13 +30,6 @@ public class Xicidaili implements Runnable{
             queue.add("http://www.xicidaili.com/wt/" + i);
         }
 
-//        BlockingQueue<ProxyIp> ips = null;
-//        try {
-//            ips = new LinkedBlockingDeque<>(new ProxyDao().query(100));
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         while (queue.size() > 0){
             try {
                 url = queue.poll();

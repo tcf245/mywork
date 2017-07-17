@@ -2,16 +2,10 @@ package com.bfd.tmall;
 
 import com.bfd.WorkCache;
 import com.bfd.http.OkHttpUtils;
-import com.bfd.model.ProxyIp;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.protocol.HTTP;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,8 +17,6 @@ public class TmallTest {
         int i = 1;
 
         for (int j = 0; j < 30; j++) {
-
-
 
         String listpage = FileUtils.readFileToString(new File("etc/tmalllist.txt"),"utf-8");
         Matcher m = Pattern.compile("data-id=\"(\\d+)\"").matcher(listpage);
