@@ -21,11 +21,44 @@
             </plugin>
         </plugins>
     </build>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.4.RELEASE</version>
+    </parent>
+
+    <repositories>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://101.200.236.98:8089/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>nexus3d</id>
+            <name>Team Nexus Repository 3d</name>
+            <url>http://101.200.236.98:8089/nexus/content/repositories/thirdparty/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://101.200.236.98:8089/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <modules>
         <module>../Tmall</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

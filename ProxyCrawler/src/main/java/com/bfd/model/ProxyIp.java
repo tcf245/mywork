@@ -2,6 +2,8 @@ package com.bfd.model;
 
 import com.bfd.WorkCache;
 
+import java.net.Proxy;
+
 /**
  * Created by BFD_303 on 2017/7/7.
  */
@@ -15,19 +17,40 @@ public class ProxyIp {
      */
     private int status;
     private int score;
+    private Proxy.Type type = Proxy.Type.HTTP;
 
-    public ProxyIp(String ip, int port, int status, int score) {
+    public ProxyIp(String ip, int port, int status, int score,String type) {
         this.ip = ip;
         this.port = port;
         this.status = status;
         this.score = score;
+        setType(type);
+
     }
 
     public ProxyIp(String ip, int port) {
         this.ip = ip;
         this.port = port;
         this.score = 0;
-        this.status = 1;
+        this.status = 0;
+        this.type = Proxy.Type.HTTP;
+    }
+
+    public Proxy.Type getType() {
+        return type;
+    }
+
+    public void setType(Proxy.Type type) {
+        this.type = type;
+    }
+
+    public void setType(String type) {
+        if ("SOCKS".equals(type))
+            this.type = Proxy.Type.SOCKS;
+        else if ("DIRECT".equals(type))
+            this.type = Proxy.Type.DIRECT;
+        else
+            this.type = Proxy.Type.HTTP;
     }
 
     public void scoreAdd(int num){
@@ -79,4 +102,5 @@ public class ProxyIp {
     public String toJson(){
         return WorkCache.gson.toJson(this);
     }
+
 }
