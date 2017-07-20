@@ -37,7 +37,7 @@ public class ItemDao {
     public List<Item> query(int limit) throws SQLException {
         try (Connection conn = DBManager.getConnection()) {
             return runner.query(conn
-                    , "select * from infopages where price='' limit " + (limit > 0 ? limit : 100)
+                    , "select * from infopages where info_status=0 and price='' limit " + (limit > 0 ? limit : 100)
                     , new ResultSetHandler<List<Item>>() {
                         @Override
                         public List<Item> handle(ResultSet resultSet) throws SQLException {
