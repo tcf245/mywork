@@ -38,7 +38,7 @@ public class Xicidaili implements Runnable{
         while (queue.size() > 0){
             try {
                 url = queue.poll();
-                String html = OkHttpUtils.doGet(url, WorkCache.headers);
+                String html = OkHttpUtils.doGet(url, WorkCache.headers,null);
                 parse(html);
                 Thread.sleep(5000 + ((long)Math.random()*2000));
             } catch (Exception e) {
@@ -80,7 +80,7 @@ public class Xicidaili implements Runnable{
             headers.put("x-forwarded-for","123.57.17." + i%255 );
             headers.put("x-real-ip","123.55.15." + i%255 );
             try {
-                String content = OkHttpUtils.doGet(url, headers);
+                String content = OkHttpUtils.doGet(url, headers,null);
                 System.out.println(i++ + " ==> " + content);
             } catch (Exception e) {
                 System.out.println(Thread.currentThread().getName() + "  <=  failed");

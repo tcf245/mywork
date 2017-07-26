@@ -36,11 +36,14 @@ public class ProxyDao {
         }
     }
 
-    public List<ProxyIp> query(int limit) throws SQLException {
+    public List<ProxyIp> query(int limit,String type) throws SQLException {
         try(Connection conn = DBManager.getConnection()) {
             return runner.query(conn
-                    , "select * from proxy.proxy where status = 1 and score > 0 order by update_time limit " + (limit > 0 ? limit : 100)
-                    , new ProxyListRSHandler());
+                    , "select * from proxy.proxy where status = 1 and score > 0 " +
+                            "and type = ?" +
+                            "order by update_time limit " + (limit > 0 ? limit : 100)
+                    , new ProxyListRSHandler()
+                    ,"SOCKS".equals(type) ? type : "HTTP");
         }
     }
 

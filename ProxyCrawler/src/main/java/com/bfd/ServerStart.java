@@ -1,5 +1,6 @@
 package com.bfd;
 
+import com.bfd.crawler.GatherProxy;
 import com.bfd.model.ProxyDao;
 import com.bfd.model.ProxyIp;
 import org.apache.commons.logging.Log;
@@ -43,6 +44,8 @@ public class ServerStart {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+        new Thread(new GatherProxy(PRO_QUEUE)).start();
 
         for (int i = 1;i < 30 ;i++){
             new Thread(new ProxyTestWorker(PRO_QUEUE)).start();

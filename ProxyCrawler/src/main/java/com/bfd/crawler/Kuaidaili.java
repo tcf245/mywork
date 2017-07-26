@@ -35,7 +35,7 @@ public class Kuaidaili implements Runnable{
         while (queue.size() > 0){
             try {
                 url = queue.poll();
-                String html = OkHttpUtils.doGet(url, WorkCache.headers);
+                String html = OkHttpUtils.doGet(url, WorkCache.headers,null);
                 parse(html);
                 Thread.sleep(6000 + ((long)Math.random()*2000));
             } catch (Exception e) {

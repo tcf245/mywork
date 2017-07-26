@@ -9,6 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <!--<modules>-->
+        <!--<module>../Tmall</module>-->
+    <!--</modules>-->
+
     <build>
         <plugins>
             <plugin>
@@ -50,9 +54,6 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <modules>
-        <module>../Tmall</module>
-    </modules>
 
     <dependencies>
         <dependency>

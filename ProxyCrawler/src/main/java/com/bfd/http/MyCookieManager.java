@@ -15,14 +15,24 @@ import java.util.concurrent.ConcurrentHashMap;
 class MyCookieManager implements CookieJar {
     private final Map<String,List<Cookie>> cookieStore = new ConcurrentHashMap<String,List<Cookie>>();
 
+    /**
+     * 从Response头分析cookir并更新
+     * @param httpUrl
+     * @param list
+     */
     public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
         if (list != null && list.size() > 0){
             cookieStore.put(httpUrl.host(),list);
         }
     }
 
+    /**
+     * 根据url查找适用的cookie
+     * @param httpUrl
+     * @return
+     */
     public List<Cookie> loadForRequest(HttpUrl httpUrl) {
         List<Cookie> cookies = cookieStore.get(httpUrl.host());
-        return cookies == null ? new ArrayList<Cookie>() : cookies;
+        return cookies == null ? new ArrayList<>() : cookies;
     }
 }
