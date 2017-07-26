@@ -42,7 +42,7 @@ public class Worker implements Runnable {
                 headers.put("x-forwarded-for", "123.57.17." + i % 255);
                 headers.put("x-real-ip", "180.10.241." + i % 255);
                 try {
-                    String content = OkHttpUtils.doGet(url, headers);
+                    String content = OkHttpUtils.doGet(url, headers,null);
                     LOG.trace(Thread.currentThread().getName() + "get content is  id -> " + id + ",content -> " + content);
                     int c = 0;
                     m = Pattern.compile("\"price\":\"([\\.\\d]+)\"").matcher(content);
