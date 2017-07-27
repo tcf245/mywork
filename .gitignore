@@ -19,6 +19,7 @@
 *.rar
 
 *.iml
+*.MF
 
 */etc/*
 */log/*
