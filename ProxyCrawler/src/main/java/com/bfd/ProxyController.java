@@ -35,10 +35,10 @@ public class ProxyController {
     @RequestMapping("/proxy")
     @ResponseBody
     String getProxy(@RequestParam(value = "id",required = true) String id, @RequestParam(value = "type",required =false) String type, @RequestParam(value = "page",required =false,defaultValue = "1") int page){
-        if (!"crawler".equals(id))
+        if (!"crawler".equalsIgnoreCase(id))
            return "error id : " + id;
 
-        if (!"SOCKS".equals(type))
+        if (!"SOCKS".equalsIgnoreCase(type))
             type = "HTTP";
 
         if (page < 1)

@@ -70,7 +70,8 @@ public class ServerStart {
     }
 
     public static void main(String[] args) {
-        PropertyConfigurator.configureAndWatch(ServerStart.class.getClassLoader().getResource("log4j.properties").getFile());
+//        PropertyConfigurator.configureAndWatch(ServerStart.class.getClassLoader().getResource("log4j.properties").getFile());
+        PropertyConfigurator.configureAndWatch("etc/log4j.properties");
         SpringApplication.run(ProxyController.class, args);
         ServerStart server = new ServerStart();
         server.run();

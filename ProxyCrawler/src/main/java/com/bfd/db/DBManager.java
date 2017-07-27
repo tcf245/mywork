@@ -21,7 +21,8 @@ public class DBManager {
     static{
         Properties p = new Properties();
         try {
-            p.load(FileUtils.openInputStream(new File(DBManager.class.getClassLoader().getResource("db.properties").getFile())));
+//            p.load(FileUtils.openInputStream(new File(DBManager.class.getClassLoader().getResource("db.properties").getFile())));
+            p.load(FileUtils.openInputStream(new File("etc/db.properties")));
             dds = (DruidDataSource) DruidDataSourceFactory.createDataSource(p);
         } catch (IOException e) {
             LOG.error("db config file error !");
